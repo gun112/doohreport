@@ -1,0 +1,228 @@
+{
+  "location": {
+    "id": "jamsil-exit3",
+    "name": "잠실역 3번 출구 상권",
+    "type": "floating_population",
+    "coordinates": {
+      "lat": 37.5135,
+      "lng": 127.1005
+    },
+    "district": "송파구",
+    "address": "서울특별시 송파구 올림픽로 지하 265",
+    "area": "상권/번화가",
+    "areaSize": "반경 200m",
+    "nearbyLandmarks": [
+      "잠실역 3번 출구",
+      "롯데월드타워",
+      "롯데월드몰",
+      "잠실광역환승센터"
+    ]
+  },
+  "campaign": {
+    "name": "샘플 캠페인",
+    "startDate": "2024-01-15",
+    "endDate": "2024-01-21",
+    "duration": 7
+  },
+  "summary": {
+    "totalImpressions": 658000,
+    "dailyAverage": 94000,
+    "peakHour": "18:00-19:00",
+    "peakTraffic": 9500,
+    "avgDwellTime": "12.3분",
+    "repeatVisitRate": "45%"
+  },
+  "demographics": {
+    "byAge": [
+      { "range": "10대", "percentage": 15, "count": 14100 },
+      { "range": "20대", "percentage": 28, "count": 26320 },
+      { "range": "30대", "percentage": 25, "count": 23500 },
+      { "range": "40대", "percentage": 20, "count": 18800 },
+      { "range": "50대", "percentage": 9, "count": 8460 },
+      { "range": "60대 이상", "percentage": 3, "count": 2820 }
+    ],
+    "byGender": [
+      { "gender": "남성", "percentage": 48, "count": 45120 },
+      { "gender": "여성", "percentage": 52, "count": 48880 }
+    ],
+    "byOccupation": [
+      { "type": "직장인", "percentage": 45 },
+      { "type": "학생", "percentage": 22 },
+      { "type": "가족단위", "percentage": 20 },
+      { "type": "관광객", "percentage": 8 },
+      { "type": "기타", "percentage": 5 }
+    ]
+  },
+  "behaviorPattern": {
+    "purpose": [
+      { "type": "쇼핑", "percentage": 35 },
+      { "type": "식사/카페", "percentage": 28 },
+      { "type": "출퇴근", "percentage": 20 },
+      { "type": "여가/관광", "percentage": 12 },
+      { "type": "기타", "percentage": 5 }
+    ],
+    "dwellTime": [
+      { "range": "5분 미만", "percentage": 20 },
+      { "range": "5-10분", "percentage": 25 },
+      { "range": "10-30분", "percentage": 30 },
+      { "range": "30분 이상", "percentage": 25 }
+    ]
+  },
+  "dailyData": [
+    { "date": "2024-01-15", "traffic": 90000, "day": "월", "weather": "맑음" },
+    { "date": "2024-01-16", "traffic": 92000, "day": "화", "weather": "맑음" },
+    { "date": "2024-01-17", "traffic": 94000, "day": "수", "weather": "흐림" },
+    { "date": "2024-01-18", "traffic": 96000, "day": "목", "weather": "맑음" },
+    { "date": "2024-01-19", "traffic": 98000, "day": "금", "weather": "맑음" },
+    { "date": "2024-01-20", "traffic": 110000, "day": "토", "weather": "맑음" },
+    { "date": "2024-01-21", "traffic": 78000, "day": "일", "weather": "비" }
+  ],
+  "hourlyPattern": [
+    { "hour": "06:00", "traffic": 1500, "density": "낮음" },
+    { "hour": "07:00", "traffic": 4200, "density": "보통" },
+    { "hour": "08:00", "traffic": 7500, "density": "높음" },
+    { "hour": "09:00", "traffic": 6800, "density": "높음" },
+    { "hour": "10:00", "traffic": 5500, "density": "보통" },
+    { "hour": "11:00", "traffic": 6800, "density": "보통" },
+    { "hour": "12:00", "traffic": 8200, "density": "높음" },
+    { "hour": "13:00", "traffic": 7800, "density": "높음" },
+    { "hour": "14:00", "traffic": 7200, "density": "높음" },
+    { "hour": "15:00", "traffic": 7500, "density": "높음" },
+    { "hour": "16:00", "traffic": 8000, "density": "높음" },
+    { "hour": "17:00", "traffic": 8500, "density": "매우높음" },
+    { "hour": "18:00", "traffic": 9500, "density": "매우높음" },
+    { "hour": "19:00", "traffic": 9200, "density": "매우높음" },
+    { "hour": "20:00", "traffic": 8800, "density": "매우높음" },
+    { "hour": "21:00", "traffic": 7800, "density": "높음" },
+    { "hour": "22:00", "traffic": 6500, "density": "보통" },
+    { "hour": "23:00", "traffic": 4800, "density": "보통" },
+    { "hour": "24:00", "traffic": 3200, "density": "낮음" }
+  ],
+  "weekdayVsWeekend": {
+    "weekday": {
+      "avgTraffic": 94000,
+      "peakTime": "18:00-19:00",
+      "characteristics": "퇴근 후 쇼핑/식사 집중"
+    },
+    "weekend": {
+      "avgTraffic": 94000,
+      "peakTime": "14:00-18:00",
+      "characteristics": "오후~저녁 쇼핑/여가 집중"
+    }
+  },
+  "doohMedia": [
+    {
+      "id": "FLOAT-JS-001",
+      "type": "대형 LED 빌보드",
+      "location": "롯데월드타워 외벽",
+      "size": "20m x 10m",
+      "position": "3번 출구 정면",
+      "viewingDistance": "30-200m",
+      "estimatedViews": 94000,
+      "pricePerWeek": 12000000,
+      "features": [
+        "초대형",
+        "4K 해상도",
+        "야간 밝기 조절",
+        "랜드마크 위치"
+      ]
+    },
+    {
+      "id": "FLOAT-JS-002",
+      "type": "디지털 키오스크",
+      "location": "광역환승센터 출구",
+      "size": "65인치",
+      "position": "출구 앞 보도",
+      "viewingDistance": "2-10m",
+      "estimatedViews": 52000,
+      "pricePerWeek": 1800000,
+      "features": [
+        "터치 인터랙션",
+        "양면",
+        "교통정보 제공",
+        "다국어 지원"
+      ]
+    },
+    {
+      "id": "FLOAT-JS-003",
+      "type": "롯데월드몰 내부 전광판",
+      "location": "몰 1층 중앙광장",
+      "size": "10m x 5m",
+      "position": "천장",
+      "viewingDistance": "10-50m",
+      "estimatedViews": 68000,
+      "pricePerWeek": 5000000,
+      "features": [
+        "실내",
+        "고화질",
+        "쇼핑객 타겟"
+      ]
+    },
+    {
+      "id": "FLOAT-JS-004",
+      "type": "보행로 스탠딩 배너",
+      "location": "3번 출구 앞 보도",
+      "size": "1m x 2.5m",
+      "position": "보행로",
+      "viewingDistance": "3-15m",
+      "estimatedViews": 35000,
+      "pricePerWeek": 800000,
+      "features": [
+        "양면",
+        "LED 조명",
+        "가변형"
+      ]
+    }
+  ],
+  "nearbyPOI": [
+    {
+      "name": "롯데월드타워",
+      "type": "랜드마크/쇼핑",
+      "distance": "50m",
+      "relevance": "관광객 + 쇼핑객 밀집"
+    },
+    {
+      "name": "롯데월드몰",
+      "type": "대형쇼핑몰",
+      "distance": "연결",
+      "relevance": "쇼핑 유동인구"
+    },
+    {
+      "name": "롯데월드 어드벤처",
+      "type": "테마파크",
+      "distance": "200m",
+      "relevance": "가족단위 방문객"
+    },
+    {
+      "name": "석촌호수",
+      "type": "공원",
+      "distance": "300m",
+      "relevance": "산책/여가 인구"
+    }
+  ],
+  "dataSources": [
+    {
+      "name": "서울시 우리마을가게 상권분석 서비스",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-22",
+      "updateFrequency": "매주"
+    },
+    {
+      "name": "통신사 기반 유동인구 데이터",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-20",
+      "updateFrequency": "매주"
+    },
+    {
+      "name": "송파구 상권분석 데이터",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-18",
+      "updateFrequency": "매월"
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2024-01-28T14:30:00Z",
+    "dataPeriod": "2024-01-01 ~ 2024-01-31",
+    "version": "1.0"
+  }
+}

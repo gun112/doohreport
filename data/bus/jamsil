@@ -1,0 +1,184 @@
+{
+  "location": {
+    "id": "jamsil-gwc",
+    "name": "잠실역.잠실광역환승센터",
+    "type": "bus_stop",
+    "busStopId": "23-123",
+    "coordinates": {
+      "lat": 37.5135,
+      "lng": 127.1002
+    },
+    "district": "송파구",
+    "address": "서울특별시 송파구 올림픽로 지하 265",
+    "nearbyLandmarks": [
+      "잠실역 3번 출구",
+      "롯데월드타워",
+      "잠실광역환승센터"
+    ]
+  },
+  "campaign": {
+    "name": "샘플 캠페인",
+    "startDate": "2024-01-15",
+    "endDate": "2024-01-21",
+    "duration": 7
+  },
+  "summary": {
+    "totalImpressions": 145000,
+    "dailyAverage": 20714,
+    "peakHour": "08:00-09:00",
+    "peakTraffic": 3200,
+    "dailyBoardings": 8500,
+    "dailyAlightings": 7800,
+    "avgWaitTime": "4.2분",
+    "totalRoutes": 15
+  },
+  "busInfo": {
+    "shelterType": "스마트 쉘터",
+    "digitalDisplays": 2,
+    "seatingCapacity": 12,
+    "coveredArea": "30㎡",
+    "features": [
+      "실시간 버스 도착 정보",
+      "Wi-Fi",
+      "USB 충전",
+      "냉난방"
+    ]
+  },
+  "routes": [
+    {
+      "number": "3411",
+      "type": "간선",
+      "direction": "강남역 - 잠실역 - 천호역",
+      "frequency": "5-7분",
+      "dailyRiders": 12500,
+      "peakFrequency": "3-4분",
+      "firstBus": "04:30",
+      "lastBus": "23:50"
+    },
+    {
+      "number": "5413",
+      "type": "지선",
+      "direction": "잠실역 - 문정동 - 가락시장",
+      "frequency": "10-15분",
+      "dailyRiders": 4200,
+      "peakFrequency": "8-10분",
+      "firstBus": "05:00",
+      "lastBus": "23:30"
+    },
+    {
+      "number": "146",
+      "type": "간선",
+      "direction": "강남역 - 잠실역 - 상일동",
+      "frequency": "6-8분",
+      "dailyRiders": 8900,
+      "peakFrequency": "4-5분",
+      "firstBus": "04:20",
+      "lastBus": "24:00"
+    },
+    {
+      "number": "301",
+      "type": "간선",
+      "direction": "잠실역 - 강동구청 - 상일동",
+      "frequency": "8-12분",
+      "dailyRiders": 6500,
+      "peakFrequency": "6-8분",
+      "firstBus": "05:00",
+      "lastBus": "23:40"
+    }
+  ],
+  "dailyData": [
+    { "date": "2024-01-15", "boarding": 8200, "alighting": 7600, "total": 15800, "day": "월" },
+    { "date": "2024-01-16", "boarding": 8400, "alighting": 7800, "total": 16200, "day": "화" },
+    { "date": "2024-01-17", "boarding": 8600, "alighting": 8000, "total": 16600, "day": "수" },
+    { "date": "2024-01-18", "boarding": 8800, "alighting": 8100, "total": 16900, "day": "목" },
+    { "date": "2024-01-19", "boarding": 9000, "alighting": 8300, "total": 17300, "day": "금" },
+    { "date": "2024-01-20", "boarding": 9500, "alighting": 8800, "total": 18300, "day": "토" },
+    { "date": "2024-01-21", "boarding": 7500, "alighting": 7000, "total": 14500, "day": "일" }
+  ],
+  "hourlyPattern": [
+    { "hour": "05:00", "boarding": 180, "alighting": 120, "waiting": 80 },
+    { "hour": "06:00", "boarding": 520, "alighting": 280, "waiting": 150 },
+    { "hour": "07:00", "boarding": 1200, "alighting": 450, "waiting": 320 },
+    { "hour": "08:00", "boarding": 1800, "alighting": 650, "waiting": 480 },
+    { "hour": "09:00", "boarding": 1400, "alighting": 850, "waiting": 380 },
+    { "hour": "10:00", "boarding": 650, "alighting": 550, "waiting": 180 },
+    { "hour": "11:00", "boarding": 550, "alighting": 480, "waiting": 150 },
+    { "hour": "12:00", "boarding": 750, "alighting": 620, "waiting": 200 },
+    { "hour": "13:00", "boarding": 680, "alighting": 580, "waiting": 170 },
+    { "hour": "14:00", "boarding": 620, "alighting": 550, "waiting": 160 },
+    { "hour": "15:00", "boarding": 680, "alighting": 600, "waiting": 180 },
+    { "hour": "16:00", "boarding": 820, "alighting": 720, "waiting": 220 },
+    { "hour": "17:00", "boarding": 1100, "alighting": 950, "waiting": 300 },
+    { "hour": "18:00", "boarding": 1350, "alighting": 1200, "waiting": 380 },
+    { "hour": "19:00", "boarding": 1200, "alighting": 1100, "waiting": 340 },
+    { "hour": "20:00", "boarding": 950, "alighting": 900, "waiting": 260 },
+    { "hour": "21:00", "boarding": 780, "alighting": 720, "waiting": 210 },
+    { "hour": "22:00", "boarding": 620, "alighting": 580, "waiting": 170 },
+    { "hour": "23:00", "boarding": 380, "alighting": 350, "waiting": 100 },
+    { "hour": "24:00", "boarding": 180, "alighting": 160, "waiting": 50 }
+  ],
+  "doohMedia": [
+    {
+      "id": "BUS-JS-001",
+      "type": "디지털 정보 디스플레이",
+      "location": "쉘터 내부",
+      "size": "55인치",
+      "position": "대기석 정면",
+      "viewingDistance": "1-3m",
+      "estimatedViews": 20000,
+      "pricePerWeek": 800000,
+      "features": [
+        "세로형",
+        "터치 인터랙션",
+        "음성 지원"
+      ]
+    },
+    {
+      "id": "BUS-JS-002",
+      "type": "쉘터 후면 광고판",
+      "location": "쉘터 외부",
+      "size": "2m x 3m",
+      "position": "대기석 뒤",
+      "viewingDistance": "5-20m",
+      "estimatedViews": 45000,
+      "pricePerWeek": 1200000,
+      "features": [
+        "백라이트",
+        "야간 조명"
+      ]
+    },
+    {
+      "id": "BUS-JS-003",
+      "type": "스탠딩 배너",
+      "location": "정류장 주변",
+      "size": "0.8m x 2m",
+      "position": "보도",
+      "viewingDistance": "3-10m",
+      "estimatedViews": 15000,
+      "pricePerWeek": 500000,
+      "features": [
+        "양면",
+        "가변형"
+      ]
+    }
+  ],
+  "dataSources": [
+    {
+      "name": "서울시 버스 승하차 인원 정보",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-22",
+      "updateFrequency": "매일"
+    },
+    {
+      "name": "서울시 버스 노선별 이용 현황",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-20",
+      "updateFrequency": "매월"
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2024-01-28T14:30:00Z",
+    "dataPeriod": "2024-01-01 ~ 2024-01-31",
+    "version": "1.0"
+  }
+}

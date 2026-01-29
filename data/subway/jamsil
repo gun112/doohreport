@@ -1,0 +1,138 @@
+{
+  "location": {
+    "id": "jamsil",
+    "name": "잠실역",
+    "type": "subway",
+    "lines": ["2호선", "8호선"],
+    "coordinates": {
+      "lat": 37.5133,
+      "lng": 127.1000
+    },
+    "district": "송파구",
+    "address": "서울특별시 송파구 올림픽로 지하 265"
+  },
+  "campaign": {
+    "name": "샘플 캠페인",
+    "startDate": "2024-01-15",
+    "endDate": "2024-01-21",
+    "duration": 7
+  },
+  "summary": {
+    "totalImpressions": 1050000,
+    "dailyAverage": 150000,
+    "peakHour": "18:00-19:00",
+    "peakTraffic": 12500,
+    "totalRiders": 1050000,
+    "transfers": 315000
+  },
+  "lineData": [
+    {
+      "line": "2호선",
+      "dailyRiders": 95000,
+      "percentage": 63
+    },
+    {
+      "line": "8호선",
+      "dailyRiders": 55000,
+      "percentage": 37
+    }
+  ],
+  "dailyData": [
+    { "date": "2024-01-15", "traffic": 145000, "day": "월", "boarding": 73000, "alighting": 72000 },
+    { "date": "2024-01-16", "traffic": 148000, "day": "화", "boarding": 74500, "alighting": 73500 },
+    { "date": "2024-01-17", "traffic": 152000, "day": "수", "boarding": 76500, "alighting": 75500 },
+    { "date": "2024-01-18", "traffic": 155000, "day": "목", "boarding": 78000, "alighting": 77000 },
+    { "date": "2024-01-19", "traffic": 158000, "day": "금", "boarding": 79500, "alighting": 78500 },
+    { "date": "2024-01-20", "traffic": 165000, "day": "토", "boarding": 83000, "alighting": 82000 },
+    { "date": "2024-01-21", "traffic": 127000, "day": "일", "boarding": 64000, "alighting": 63000 }
+  ],
+  "hourlyPattern": [
+    { "hour": "05:00", "traffic": 2500, "boarding": 1800, "alighting": 700 },
+    { "hour": "06:00", "traffic": 5200, "boarding": 4200, "alighting": 1000 },
+    { "hour": "07:00", "traffic": 9800, "boarding": 8500, "alighting": 1300 },
+    { "hour": "08:00", "traffic": 12000, "boarding": 10200, "alighting": 1800 },
+    { "hour": "09:00", "traffic": 10500, "boarding": 8800, "alighting": 1700 },
+    { "hour": "10:00", "traffic": 7200, "boarding": 3800, "alighting": 3400 },
+    { "hour": "11:00", "traffic": 6500, "boarding": 3200, "alighting": 3300 },
+    { "hour": "12:00", "traffic": 8200, "boarding": 4300, "alighting": 3900 },
+    { "hour": "13:00", "traffic": 7500, "boarding": 3900, "alighting": 3600 },
+    { "hour": "14:00", "traffic": 7000, "boarding": 3500, "alighting": 3500 },
+    { "hour": "15:00", "traffic": 7500, "boarding": 3800, "alighting": 3700 },
+    { "hour": "16:00", "traffic": 8500, "boarding": 4500, "alighting": 4000 },
+    { "hour": "17:00", "traffic": 10200, "boarding": 5500, "alighting": 4700 },
+    { "hour": "18:00", "traffic": 12500, "boarding": 6200, "alighting": 6300 },
+    { "hour": "19:00", "traffic": 11800, "boarding": 5800, "alighting": 6000 },
+    { "hour": "20:00", "traffic": 9500, "boarding": 4500, "alighting": 5000 },
+    { "hour": "21:00", "traffic": 8200, "boarding": 3800, "alighting": 4400 },
+    { "hour": "22:00", "traffic": 6800, "boarding": 3000, "alighting": 3800 },
+    { "hour": "23:00", "traffic": 4500, "boarding": 2000, "alighting": 2500 },
+    { "hour": "24:00", "traffic": 2200, "boarding": 1000, "alighting": 1200 }
+  ],
+  "exits": [
+    {
+      "number": "1번 출구",
+      "direction": "롯데월드타워",
+      "dailyTraffic": 45000,
+      "facilities": ["엘리베이터", "에스컬레이터"]
+    },
+    {
+      "number": "2번 출구", 
+      "direction": "롯데월드몰",
+      "dailyTraffic": 38000,
+      "facilities": ["엘리베이터", "에스컬레이터"]
+    },
+    {
+      "number": "3번 출구",
+      "direction": "잠실광역환승센터",
+      "dailyTraffic": 52000,
+      "facilities": ["엘리베이터", "에스컬레이터", "환승센터 연결"]
+    },
+    {
+      "number": "4번 출구",
+      "direction": "석촌호수",
+      "dailyTraffic": 35000,
+      "facilities": ["계단만"]
+    }
+  ],
+  "doohMedia": [
+    {
+      "id": "SUBWAY-JS-001",
+      "type": "대형 LED 전광판",
+      "location": "대합실",
+      "size": "10m x 3m",
+      "position": "승강장 진입 전",
+      "viewingDistance": "10-30m",
+      "estimatedViews": 150000,
+      "pricePerWeek": 5000000
+    },
+    {
+      "id": "SUBWAY-JS-002",
+      "type": "디지털 스크린",
+      "location": "승강장",
+      "size": "65인치",
+      "position": "대기 구역",
+      "viewingDistance": "2-10m",
+      "estimatedViews": 80000,
+      "pricePerWeek": 2500000
+    }
+  ],
+  "dataSources": [
+    {
+      "name": "서울교통공사 승하차 인원 정보",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-22",
+      "updateFrequency": "매일"
+    },
+    {
+      "name": "서울시 지하철 이용 통계",
+      "url": "https://data.seoul.go.kr",
+      "lastUpdated": "2024-01-20",
+      "updateFrequency": "매월"
+    }
+  ],
+  "metadata": {
+    "generatedAt": "2024-01-28T14:30:00Z",
+    "dataPeriod": "2024-01-01 ~ 2024-01-31",
+    "version": "1.0"
+  }
+}
