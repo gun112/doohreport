@@ -14,14 +14,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <head>
-        <Script
-          strategy="beforeInteractive"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=false`}
-        />
-      </head>
       <body>
         {children}
+        
+        {/* 카카오맵 SDK - body 끝에 로드 */}
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_KEY}&autoload=false`}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

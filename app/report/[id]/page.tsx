@@ -233,9 +233,9 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           },
           traffic_data: sampleData,
           images: [
-            'https://via.placeholder.com/1200x600/3B82F6/FFFFFF?text=매체+사진+1',
-            'https://via.placeholder.com/1200x600/10B981/FFFFFF?text=매체+사진+2',
-            'https://via.placeholder.com/1200x600/F59E0B/FFFFFF?text=매체+사진+3'
+            'https://placehold.co/1200x600/3B82F6/FFFFFF?text=매체+사진+1',
+            'https://placehold.co/1200x600/10B981/FFFFFF?text=매체+사진+2',
+            'https://placehold.co/1200x600/F59E0B/FFFFFF?text=매체+사진+3'
           ]
         })
       } catch (error) {
