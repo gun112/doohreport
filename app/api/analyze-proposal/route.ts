@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
               type: 'document',
               source: {
                 type: 'base64',
-                media_type: mediaType,
+                media_type: mediaType as "application/pdf",
                 data: base64,
               },
             },
