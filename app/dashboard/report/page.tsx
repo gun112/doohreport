@@ -151,9 +151,12 @@ export default function ReportListPage() {
       {!loading && reports.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {reports.map((report) => (
-            <div
+            <Link
+              href={`/dashboard/report/${report.id}`}
               key={report.id}
               style={{
+              display: 'block',
+              textDecoration: 'none',
                 padding: '20px 24px',
                 backgroundColor: '#FFFFFF',
                 border: '1px solid #E5E8EB',
@@ -198,7 +201,7 @@ export default function ReportListPage() {
                 </div>
                 <span style={{ fontSize: 20, color: '#D1D6DB' }}>→</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

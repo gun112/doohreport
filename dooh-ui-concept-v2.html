@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아이디얼 DOOH - UI 컨셉 v2</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #fff; color: #191F28;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== CONCEPT SWITCHER ===== */
+  .switcher {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: #191F28; color: #fff;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 10px 0; font-size: 13px; font-weight: 500;
+  }
+  .switcher span { opacity: 0.4; font-size: 12px; }
+  .sw-btn {
+    padding: 5px 14px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.6); font-size: 12px; cursor: pointer;
+    font-family: inherit; transition: all 0.2s;
+  }
+  .sw-btn.active { background: #fff; color: #191F28; border-color: #fff; }
+  .sw-btn:hover:not(.active) { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+  .concept { display: none; padding-top: 42px; }
+  .concept.active { display: block; }
+
+  /* ===== CONCEPT A: 검색 중심 랜딩 ===== */
+
+  .a-nav {
+    background: #fff; border-bottom: 1px solid #F2F4F6;
+    padding: 0 40px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 42px; z-index: 100;
+  }
+  .logo { font-size: 16px; font-weight: 700; letter-spacing: -0.04em; }
+  .logo em { font-style: normal; color: #3182F6; }
+  .a-links { display: flex; gap: 28px; }
+  .a-links a {
+    font-size: 14px; color: #B0B8C1; text-decoration: none;
+    font-weight: 500; transition: color 0.15s;
+  }
+  .a-links a:hover, .a-links a.on { color: #191F28; }
+
+  /* Hero */
+  .a-hero {
+    padding: 72px 40px 56px; text-align: center; background: #fff;
+  }
+  .a-hero h1 {
+    font-size: 34px; font-weight: 700; letter-spacing: -0.04em;
+    line-height: 1.35; margin-bottom: 10px;
+  }
+  .a-hero p {
+    font-size: 15px; color: #8B95A1; margin-bottom: 32px;
+  }
+
+  /* Search */
+  .search-wrap {
+    max-width: 520px; margin: 0 auto;
+    display: flex; align-items: center;
+    background: #F2F4F6; border-radius: 14px; padding: 5px 5px 5px 20px;
+    transition: all 0.2s;
+  }
+  .search-wrap:focus-within {
+    box-shadow: 0 0 0 2px #3182F6; background: #fff;
+  }
+  .search-wrap input {
+    flex: 1; border: none; background: transparent; outline: none;
+    font-size: 15px; font-family: inherit; color: #191F28;
+  }
+  .search-wrap input::placeholder { color: #B0B8C1; }
+  .search-btn {
+    width: 42px; height: 42px; border-radius: 11px;
+    background: #3182F6; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s; flex-shrink: 0;
+  }
+  .search-btn:hover { background: #1B64DA; }
+  .search-btn svg { width: 17px; height: 17px; }
+
+  /* Tags */
+  .tags {
+    display: flex; gap: 7px; justify-content: center; flex-wrap: wrap;
+    margin-top: 16px; max-width: 520px; margin-left: auto; margin-right: auto;
+  }
+  .tag {
+    padding: 6px 13px; border-radius: 100px;
+    background: #F2F4F6; font-size: 13px; color: #4E5968;
+    font-weight: 500; cursor: pointer; transition: all 0.15s;
+    border: none; font-family: inherit;
+  }
+  .tag:hover { background: #E5E8EB; }
+  .tag.hot { background: #FFF0F0; color: #E8344E; }
+
+  /* Category Grid — 아이콘 없이 텍스트만 */
+  .a-cats {
+    padding: 40px 40px 0; max-width: 960px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 12px; font-weight: 600; color: #B0B8C1;
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;
+  }
+  .cat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .cat-card {
+    background: #fff; border-radius: 14px; padding: 20px 18px;
+    cursor: pointer; transition: all 0.2s; border: 1px solid #F2F4F6;
+  }
+  .cat-card:hover {
+    border-color: #3182F6; transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(49,130,246,0.07);
+  }
+  .cat-card h3 {
+    font-size: 15px; font-weight: 600; letter-spacing: -0.02em;
+    margin-bottom: 3px; color: #191F28;
+  }
+  .cat-card span {
+    font-size: 12px; color: #B0B8C1; font-weight: 400;
+  }
+  .cat-card.map-card {
+    background: #F8FAFC; border-color: #E5E8EB;
+  }
+  .cat-card.map-card h3 { color: #3182F6; }
+  .cat-card.map-card span { color: #8B95A1; }
+
+  /* Stats */
+  .a-stats {
+    padding: 32px 40px 48px; max-width: 960px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .stat-box {
+    background: #F8FAFC; border-radius: 14px; padding: 22px 20px;
+  }
+  .stat-num {
+    font-size: 26px; font-weight: 700; letter-spacing: -0.04em; color: #191F28;
+  }
+  .stat-label {
+    font-size: 12px; color: #8B95A1; margin-top: 2px; font-weight: 400;
+  }
+
+  /* Value Props */
+  .a-value {
+    padding: 0 40px 40px; max-width: 960px; margin: 0 auto;
+  }
+  .value-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .value-card {
+    background: #fff; border: 1px solid #F2F4F6; border-radius: 14px;
+    padding: 24px 20px;
+  }
+  .value-card h4 {
+    font-size: 15px; font-weight: 600; margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .value-card p {
+    font-size: 13px; color: #8B95A1; line-height: 1.5;
+  }
+
+  /* How it works */
+  .a-how {
+    padding: 40px; background: #F8FAFC;
+  }
+  .a-how-inner {
+    max-width: 960px; margin: 0 auto;
+  }
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-top: 16px;
+  }
+  .step {
+    background: #fff; border-radius: 14px; padding: 24px 20px;
+  }
+  .step-num {
+    font-size: 11px; font-weight: 700; color: #3182F6;
+    margin-bottom: 10px; letter-spacing: 0.05em;
+  }
+  .step h4 {
+    font-size: 15px; font-weight: 600; margin-bottom: 5px;
+    letter-spacing: -0.02em;
+  }
+  .step p { font-size: 13px; color: #8B95A1; line-height: 1.5; }
+
+  /* CTA */
+  .a-cta {
+    padding: 56px 40px; text-align: center; background: #fff;
+  }
+  .a-cta h2 {
+    font-size: 24px; font-weight: 700; letter-spacing: -0.04em;
+    margin-bottom: 20px;
+  }
+  .cta-btns { display: flex; gap: 10px; justify-content: center; }
+  .btn-primary {
+    padding: 13px 28px; border-radius: 12px;
+    background: #3182F6; color: #fff; font-size: 15px; font-weight: 600;
+    border: none; cursor: pointer; font-family: inherit;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #1B64DA; }
+  .btn-secondary {
+    padding: 13px 28px; border-radius: 12px;
+    background: #F2F4F6; color: #191F28; font-size: 15px; font-weight: 600;
+    border: none; cursor: pointer; font-family: inherit;
+    transition: background 0.15s;
+  }
+  .btn-secondary:hover { background: #E5E8EB; }
+
+  /* Footer */
+  .footer {
+    padding: 32px 40px; border-top: 1px solid #F2F4F6;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 960px; margin: 0 auto;
+  }
+  .footer-left { font-size: 12px; color: #B0B8C1; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 12px; color: #8B95A1; text-decoration: none; }
+  .footer-links a:hover { color: #191F28; }
+
+
+  /* ===== CONCEPT B: 지도 스플릿 ===== */
+
+  .b-wrap { display: flex; height: calc(100vh - 42px); }
+
+  .b-side {
+    width: 400px; background: #fff; overflow-y: auto;
+    border-right: 1px solid #F2F4F6; flex-shrink: 0;
+    display: flex; flex-direction: column;
+  }
+  .b-side-head { padding: 18px 20px 0; }
+  .b-search {
+    display: flex; align-items: center;
+    background: #F2F4F6; border-radius: 11px; padding: 4px 4px 4px 14px;
+    margin-bottom: 14px;
+  }
+  .b-search input {
+    flex: 1; border: none; background: transparent; outline: none;
+    font-size: 14px; font-family: inherit; color: #191F28;
+  }
+  .b-search input::placeholder { color: #B0B8C1; }
+  .b-search-btn {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: #3182F6; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .b-search-btn svg { width: 15px; height: 15px; }
+
+  .b-filters {
+    display: flex; gap: 6px; padding: 0 20px 12px;
+    overflow-x: auto; flex-wrap: nowrap;
+  }
+  .b-filter {
+    padding: 6px 14px; border-radius: 100px; font-size: 13px;
+    background: #F2F4F6; color: #4E5968; border: none;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+    transition: all 0.15s; font-weight: 500;
+  }
+  .b-filter.on { background: #191F28; color: #fff; }
+  .b-filter:hover:not(.on) { background: #E5E8EB; }
+
+  .b-tabs {
+    display: flex; border-bottom: 1px solid #F2F4F6; padding: 0 20px;
+  }
+  .b-tab {
+    padding: 10px 0; margin-right: 20px; font-size: 13px;
+    font-weight: 600; color: #B0B8C1; cursor: pointer;
+    border-bottom: 2px solid transparent; transition: all 0.15s;
+  }
+  .b-tab.on { color: #191F28; border-bottom-color: #191F28; }
+
+  .b-info {
+    padding: 12px 20px; font-size: 12px; color: #8B95A1;
+  }
+  .b-info strong { color: #191F28; }
+
+  .b-list { padding: 0 20px; flex: 1; }
+
+  .b-card {
+    display: flex; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid #F8FAFC; cursor: pointer;
+    transition: background 0.1s;
+  }
+  .b-card:hover { background: #FAFBFC; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+  .b-card-img {
+    width: 88px; height: 68px; border-radius: 10px; flex-shrink: 0;
+    position: relative; overflow: hidden;
+  }
+  .b-badge {
+    position: absolute; top: 6px; left: 6px;
+    padding: 2px 7px; border-radius: 5px; font-size: 10px; font-weight: 700;
+    background: rgba(49,130,246,0.9); color: #fff;
+  }
+  .b-card-body { flex: 1; min-width: 0; }
+  .b-card-cat { font-size: 11px; color: #B0B8C1; margin-bottom: 2px; }
+  .b-card-name {
+    font-size: 14px; font-weight: 600; letter-spacing: -0.02em;
+    margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .b-card-loc { font-size: 12px; color: #8B95A1; margin-bottom: 6px; }
+  .b-card-price { font-size: 14px; font-weight: 700; }
+  .b-card-price small { font-weight: 400; color: #B0B8C1; font-size: 11px; }
+
+  /* Map area */
+  .b-map {
+    flex: 1; background: #F2F4F6; position: relative;
+    background-image:
+      radial-gradient(circle at 30% 40%, #E8EDF2 1px, transparent 1px),
+      radial-gradient(circle at 60% 30%, #E8EDF2 1px, transparent 1px),
+      radial-gradient(circle at 80% 60%, #E8EDF2 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .b-pin {
+    position: absolute; padding: 6px 12px; border-radius: 8px;
+    background: #fff; font-size: 12px; font-weight: 700; color: #191F28;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer;
+    transition: all 0.15s; border: 1.5px solid #E5E8EB;
+  }
+  .b-pin:hover, .b-pin.on {
+    background: #3182F6; color: #fff; border-color: #3182F6;
+    transform: scale(1.05);
+  }
+
+  .b-map-ctrls {
+    position: absolute; right: 16px; bottom: 16px;
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .b-ctrl {
+    width: 36px; height: 36px; background: #fff; border: 1px solid #E5E8EB;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; color: #4E5968;
+    transition: background 0.1s;
+  }
+  .b-ctrl:first-child { border-radius: 8px 8px 0 0; }
+  .b-ctrl:last-child { border-radius: 0 0 8px 8px; }
+  .b-ctrl:hover { background: #F2F4F6; }
+
+
+  /* ===== CONCEPT C: 모바일 카드형 ===== */
+
+  .c-wrap {
+    max-width: 420px; margin: 0 auto; background: #fff;
+    min-height: 100vh;
+  }
+  .c-nav {
+    padding: 14px 20px; display: flex;
+    align-items: center; justify-content: space-between;
+    position: sticky; top: 42px; background: #fff; z-index: 50;
+    border-bottom: 1px solid #F8FAFC;
+  }
+  .c-nav-right { display: flex; gap: 18px; }
+  .c-nav-right a {
+    font-size: 13px; color: #B0B8C1; text-decoration: none; font-weight: 500;
+  }
+  .c-nav-right a:hover { color: #191F28; }
+
+  .c-hero {
+    padding: 28px 20px 20px;
+  }
+  .c-hero h1 {
+    font-size: 24px; font-weight: 700; letter-spacing: -0.04em;
+    line-height: 1.35; margin-bottom: 4px;
+  }
+  .c-hero p { font-size: 13px; color: #8B95A1; }
+
+  .c-search {
+    margin: 0 20px 16px;
+    display: flex; align-items: center;
+    background: #F2F4F6; border-radius: 12px; padding: 4px 4px 4px 16px;
+  }
+  .c-search input {
+    flex: 1; border: none; background: transparent; outline: none;
+    font-size: 14px; font-family: inherit;
+  }
+  .c-search input::placeholder { color: #B0B8C1; }
+  .c-search-btn {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: #3182F6; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .c-search-btn svg { width: 15px; height: 15px; }
+
+  /* Quick cats — 텍스트 칩 */
+  .c-chips {
+    display: flex; gap: 6px; padding: 0 20px 20px;
+    overflow-x: auto;
+  }
+  .c-chip {
+    padding: 7px 14px; border-radius: 100px;
+    background: #F2F4F6; font-size: 13px; color: #4E5968;
+    font-weight: 500; white-space: nowrap; cursor: pointer;
+    border: none; font-family: inherit; transition: all 0.15s;
+  }
+  .c-chip:hover { background: #E5E8EB; }
+
+  .c-section-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 20px 12px;
+  }
+  .c-section-head h2 {
+    font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
+  }
+  .c-section-head a {
+    font-size: 12px; color: #8B95A1; text-decoration: none;
+  }
+
+  .c-card {
+    margin: 0 20px 14px; border-radius: 14px; overflow: hidden;
+    border: 1px solid #F2F4F6; transition: all 0.2s; cursor: pointer;
+  }
+  .c-card:hover {
+    border-color: #E5E8EB;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .c-card-img {
+    height: 140px; position: relative;
+  }
+  .c-card-tags {
+    position: absolute; top: 10px; left: 10px; display: flex; gap: 4px;
+  }
+  .c-card-tag {
+    padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;
+    backdrop-filter: blur(8px);
+  }
+  .c-card-tag.blue { background: rgba(49,130,246,0.9); color: #fff; }
+  .c-card-tag.white { background: rgba(255,255,255,0.9); color: #191F28; }
+
+  .c-card-body { padding: 14px 16px 16px; }
+  .c-card-cat { font-size: 11px; color: #B0B8C1; margin-bottom: 3px; }
+  .c-card-name { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2px; }
+  .c-card-loc { font-size: 12px; color: #8B95A1; margin-bottom: 10px; }
+  .c-card-bottom { display: flex; justify-content: space-between; align-items: baseline; }
+  .c-card-price { font-size: 16px; font-weight: 700; }
+  .c-card-price small { font-size: 11px; font-weight: 400; color: #B0B8C1; }
+  .c-card-stat { font-size: 11px; color: #8B95A1; }
+  .c-card-stat strong { color: #4E5968; font-weight: 600; }
+
+  /* Bottom nav */
+  .c-bnav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 420px;
+    background: #fff; border-top: 1px solid #F2F4F6;
+    display: flex; padding: 8px 0 20px; z-index: 100;
+  }
+  .c-bnav-item {
+    flex: 1; text-align: center; padding: 4px 0; cursor: pointer;
+  }
+  .c-bnav-item svg { width: 20px; height: 20px; color: #B0B8C1; }
+  .c-bnav-item span { display: block; font-size: 10px; color: #B0B8C1; margin-top: 1px; font-weight: 500; }
+  .c-bnav-item.on svg { color: #3182F6; }
+  .c-bnav-item.on span { color: #3182F6; }
+
+  .c-spacer { height: 72px; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade { animation: fadeUp 0.35s ease-out forwards; }
+  .d1 { animation-delay: 0.04s; opacity: 0; }
+  .d2 { animation-delay: 0.08s; opacity: 0; }
+  .d3 { animation-delay: 0.12s; opacity: 0; }
+  .d4 { animation-delay: 0.16s; opacity: 0; }
+
+</style>
+</head>
+<body>
+
+<!-- Switcher -->
+<div class="switcher">
+  <span>컨셉</span>
+  <button class="sw-btn active" onclick="show('a')">A. 검색 중심</button>
+  <button class="sw-btn" onclick="show('b')">B. 지도 스플릿</button>
+  <button class="sw-btn" onclick="show('c')">C. 모바일 카드</button>
+</div>
+
+<!-- ===== A: 검색 중심 랜딩 ===== -->
+<div class="concept active" id="a">
+  <nav class="a-nav">
+    <div class="logo"><em>ideal</em> DOOH</div>
+    <div class="a-links">
+      <a href="#" class="on">매체 찾기</a>
+      <a href="#">리포트</a>
+      <a href="#">AI 추천</a>
+      <a href="#">시뮬레이션</a>
+    </div>
+  </nav>
+
+  <div class="a-hero">
+    <h1 class="fade">어떤 매체를 찾고 있나요?</h1>
+    <p class="fade d1">지역, 매체명, 카테고리로 검색하세요</p>
+
+    <div class="search-wrap fade d2">
+      <input type="text" placeholder="강남역 전광판, 지하철 2호선, 영화관...">
+      <button class="search-btn">
+        <svg fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+    </div>
+
+    <div class="tags fade d3">
+      <button class="tag hot">코엑스 K-POP</button>
+      <button class="tag">강남역</button>
+      <button class="tag">명동</button>
+      <button class="tag">지하철</button>
+      <button class="tag">영화관</button>
+      <button class="tag">버스</button>
+    </div>
+  </div>
+
+  <div class="a-cats">
+    <div class="section-label">카테고리</div>
+    <div class="cat-grid">
+      <div class="cat-card fade d1">
+        <h3>빌보드 · 전광판</h3>
+        <span>142개 매체</span>
+      </div>
+      <div class="cat-card fade d2">
+        <h3>교통시설</h3>
+        <span>238개 매체</span>
+      </div>
+      <div class="cat-card fade d3">
+        <h3>상업시설</h3>
+        <span>95개 매체</span>
+      </div>
+      <div class="cat-card fade d4">
+        <h3>엔터테인먼트</h3>
+        <span>83개 매체</span>
+      </div>
+      <div class="cat-card fade d1">
+        <h3>의료 · 뷰티</h3>
+        <span>54개 매체</span>
+      </div>
+      <div class="cat-card fade d2">
+        <h3>오피스 · 주거</h3>
+        <span>67개 매체</span>
+      </div>
+      <div class="cat-card fade d3">
+        <h3>이동 매체</h3>
+        <span>126개 매체</span>
+      </div>
+      <div class="cat-card map-card fade d4">
+        <h3>지도로 찾기 →</h3>
+        <span>전체 매체 보기</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="a-stats">
+    <div class="stat-box fade d1">
+      <div class="stat-num">805</div>
+      <div class="stat-label">등록 매체</div>
+    </div>
+    <div class="stat-box fade d2">
+      <div class="stat-num">47</div>
+      <div class="stat-label">파트너사</div>
+    </div>
+    <div class="stat-box fade d3">
+      <div class="stat-num">12,340</div>
+      <div class="stat-label">AI 리포트 생성</div>
+    </div>
+  </div>
+
+  <div class="a-value">
+    <div class="section-label">왜 아이디얼인가요</div>
+    <div class="value-grid">
+      <div class="value-card">
+        <h4>AI 리포트</h4>
+        <p>매체 선택하면 1분 안에 사후리포트가 자동으로 생성됩니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>데이터 기반 비교</h4>
+        <p>유동인구, 교통량, CPM까지 한눈에 비교하고 선택하세요.</p>
+      </div>
+      <div class="value-card">
+        <h4>예산 맞춤 추천</h4>
+        <p>예산과 타겟에 맞는 최적의 매체 조합을 AI가 찾아줍니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="a-how">
+    <div class="a-how-inner">
+      <div class="section-label">이용 방법</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">STEP 01</div>
+          <h4>매체 찾기</h4>
+          <p>지도에서 원하는 위치와 카테고리로 매체를 검색합니다.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 02</div>
+          <h4>AI 분석</h4>
+          <p>주변 유동인구, 교통 데이터를 바탕으로 효과를 예측합니다.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">STEP 03</div>
+          <h4>리포트 받기</h4>
+          <p>캠페인 사후리포트가 자동으로 생성됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="a-cta">
+    <h2>지금 바로 매체를 찾아보세요</h2>
+    <div class="cta-btns">
+      <button class="btn-primary">매체 지도 보기</button>
+      <button class="btn-secondary">무료 리포트 받기</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">© 2026 아이디얼</div>
+    <div class="footer-links">
+      <a href="#">문의하기</a>
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== B: 지도 스플릿 ===== -->
+<div class="concept" id="b">
+  <div class="b-wrap">
+    <div class="b-side">
+      <div class="b-side-head">
+        <div class="logo" style="margin-bottom:16px;"><em>ideal</em> DOOH</div>
+        <div class="b-search">
+          <input type="text" placeholder="지역, 매체명 검색">
+          <button class="b-search-btn">
+            <svg fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="b-filters">
+        <button class="b-filter on">전체</button>
+        <button class="b-filter">빌보드</button>
+        <button class="b-filter">교통</button>
+        <button class="b-filter">상업시설</button>
+        <button class="b-filter">엔터</button>
+        <button class="b-filter">의료</button>
+        <button class="b-filter">DOOH</button>
+      </div>
+
+      <div class="b-tabs">
+        <div class="b-tab on">고정 매체</div>
+        <div class="b-tab">이동 매체</div>
+      </div>
+
+      <div class="b-info">서울 · 강남구 <strong>128개</strong> 매체</div>
+
+      <div class="b-list">
+        <div class="b-card">
+          <div class="b-card-img" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+            <div class="b-badge">DOOH</div>
+          </div>
+          <div class="b-card-body">
+            <div class="b-card-cat">빌보드 · 전광판</div>
+            <div class="b-card-name">메가센트로(확장) 랩핑</div>
+            <div class="b-card-loc">서울 강남구 강남대로 606</div>
+            <div class="b-card-price">80,000,000원 <small>/ 월</small></div>
+          </div>
+        </div>
+
+        <div class="b-card">
+          <div class="b-card-img" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+            <div class="b-badge" style="background:rgba(255,255,255,0.9);color:#191F28;">NEW</div>
+          </div>
+          <div class="b-card-body">
+            <div class="b-card-cat">빌보드 · 전광판</div>
+            <div class="b-card-name">강남역 사거리 LED</div>
+            <div class="b-card-loc">서울 강남구 강남대로 396</div>
+            <div class="b-card-price">45,000,000원 <small>/ 월</small></div>
+          </div>
+        </div>
+
+        <div class="b-card">
+          <div class="b-card-img" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+          <div class="b-card-body">
+            <div class="b-card-cat">교통시설 · 지하철</div>
+            <div class="b-card-name">강남역 스크린도어 패키지</div>
+            <div class="b-card-loc">서울 2호선 강남역</div>
+            <div class="b-card-price">15,000,000원 <small>/ 월</small></div>
+          </div>
+        </div>
+
+        <div class="b-card">
+          <div class="b-card-img" style="background: linear-gradient(135deg, #a8edea, #fed6e3);"></div>
+          <div class="b-card-body">
+            <div class="b-card-cat">상업시설 · 쇼핑몰</div>
+            <div class="b-card-name">코엑스몰 미디어월</div>
+            <div class="b-card-loc">서울 강남구 삼성동</div>
+            <div class="b-card-price">별도 협의</div>
+          </div>
+        </div>
+
+        <div class="b-card">
+          <div class="b-card-img" style="background: linear-gradient(135deg, #ffecd2, #fcb69f);">
+            <div class="b-badge">DOOH</div>
+          </div>
+          <div class="b-card-body">
+            <div class="b-card-cat">엔터 · 영화관</div>
+            <div class="b-card-name">CGV 강남점 로비 사이니지</div>
+            <div class="b-card-loc">서울 강남구 역삼동</div>
+            <div class="b-card-price">5,000,000원 <small>/ 월</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b-map">
+      <div class="b-pin on" style="top:25%;left:30%;">8,000만</div>
+      <div class="b-pin" style="top:34%;left:42%;">4,500만</div>
+      <div class="b-pin" style="top:48%;left:55%;">1,500만</div>
+      <div class="b-pin" style="top:38%;left:65%;">협의</div>
+      <div class="b-pin" style="top:58%;left:35%;">500만</div>
+      <div class="b-pin" style="top:22%;left:60%;">2,500만</div>
+
+      <div class="b-map-ctrls">
+        <button class="b-ctrl">+</button>
+        <button class="b-ctrl">−</button>
+        <button class="b-ctrl">◎</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== C: 모바일 카드형 ===== -->
+<div class="concept" id="c">
+  <div class="c-wrap">
+    <nav class="c-nav">
+      <div class="logo"><em>ideal</em></div>
+      <div class="c-nav-right">
+        <a href="#">지도</a>
+        <a href="#">AI 추천</a>
+      </div>
+    </nav>
+
+    <div class="c-hero">
+      <h1>가장 효과적인<br>매체를 찾아보세요</h1>
+      <p>805개 매체, 데이터 기반 분석</p>
+    </div>
+
+    <div class="c-search">
+      <input type="text" placeholder="강남역, 영화관, 지하철...">
+      <button class="c-search-btn">
+        <svg fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+    </div>
+
+    <div class="c-chips">
+      <button class="c-chip">전광판</button>
+      <button class="c-chip">지하철</button>
+      <button class="c-chip">쇼핑몰</button>
+      <button class="c-chip">영화관</button>
+      <button class="c-chip">버스</button>
+      <button class="c-chip">택시</button>
+      <button class="c-chip">의료</button>
+    </div>
+
+    <div class="c-section-head">
+      <h2>인기 매체</h2>
+      <a href="#">전체보기</a>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card-img" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+        <div class="c-card-tags">
+          <span class="c-card-tag blue">DOOH</span>
+          <span class="c-card-tag white">NEW</span>
+        </div>
+      </div>
+      <div class="c-card-body">
+        <div class="c-card-cat">빌보드 · 전광판</div>
+        <div class="c-card-name">코엑스 K-POP 스퀘어</div>
+        <div class="c-card-loc">서울 강남구 삼성동 · 실외</div>
+        <div class="c-card-bottom">
+          <div class="c-card-price">별도 협의</div>
+          <div class="c-card-stat">유동인구 <strong>182K</strong>/일</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card-img" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+        <div class="c-card-tags">
+          <span class="c-card-tag blue">DOOH</span>
+        </div>
+      </div>
+      <div class="c-card-body">
+        <div class="c-card-cat">교통시설 · 지하철</div>
+        <div class="c-card-name">강남역 스크린도어 패키지</div>
+        <div class="c-card-loc">서울 2호선 강남역 · 실내</div>
+        <div class="c-card-bottom">
+          <div class="c-card-price">15,000,000원 <small>/ 월</small></div>
+          <div class="c-card-stat">유동인구 <strong>96K</strong>/일</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card-img" style="background: linear-gradient(135deg, #a8edea, #fed6e3);"></div>
+      <div class="c-card-body">
+        <div class="c-card-cat">엔터테인먼트 · 영화관</div>
+        <div class="c-card-name">CGV 강남점 로비 디스플레이</div>
+        <div class="c-card-loc">서울 강남구 역삼동 · 실내</div>
+        <div class="c-card-bottom">
+          <div class="c-card-price">5,000,000원 <small>/ 월</small></div>
+          <div class="c-card-stat">유동인구 <strong>42K</strong>/일</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-spacer"></div>
+
+    <div class="c-bnav">
+      <div class="c-bnav-item on">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <span>매체찾기</span>
+      </div>
+      <div class="c-bnav-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>지도</span>
+      </div>
+      <div class="c-bnav-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>리포트</span>
+      </div>
+      <div class="c-bnav-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>
+        <span>MY</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.concept').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.sw-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

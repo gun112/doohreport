@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface Media {
@@ -13,7 +13,19 @@ interface Media {
   monthly_price: number;
 }
 
-export default function NewReportPage() {
+interface Report {
+  id: string;
+  title: string;
+  status: string;
+  budget: number | null;
+  campaign_start: string | null;
+  campaign_end: string | null;
+  target_audience: string | null;
+  media_ids: string[] | null;
+}
+
+export default function EditReportPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
   const [mediaList, setMediaList] = useState<Media[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,28 +38,46 @@ export default function NewReportPage() {
   const [targetAudience, setTargetAudience] = useState('');
   const [budget, setBudget] = useState('');
   const [selectedMediaIds, setSelectedMediaIds] = useState<string[]>([]);
+  const [status, setStatus] = useState('draft');
 
   useEffect(() => {
-    fetchMedia();
-  }, []);
+    fetchData();
+  }, [id]);
 
-  const fetchMedia = async () => {
+  const fetchData = async () => {
     try {
-      const res = await fetch('/api/media');
-      const json = await res.json();
-      if (json.success) {
-        setMediaList(json.data);
+      // 리포트 데이터 불러오기
+      const reportRes = await fetch(`/api/reports?id=${id}`);
+      const reportJson = await reportRes.json();
+
+      if (reportJson.success && reportJson.data.length > 0) {
+        const report: Report = reportJson.data[0];
+        setTitle(report.title);
+        setCampaignStart(report.campaign_start || '');
+        setCampaignEnd(report.campaign_end || '');
+        setTargetAudience(report.target_audience || '');
+        setBudget(report.budget ? report.budget.toString() : '');
+        setSelectedMediaIds(report.media_ids || []);
+        setStatus(report.status);
+      }
+
+      // 매체 목록 불러오기
+      const mediaRes = await fetch('/api/media');
+      const mediaJson = await mediaRes.json();
+      if (mediaJson.success) {
+        setMediaList(mediaJson.data);
       }
     } catch (err) {
-      console.error('매체 로딩 실패:', err);
+      console.error('데이터 로딩 실패:', err);
+      alert('리포트를 불러오는데 실패했습니다.');
     } finally {
       setLoading(false);
     }
   };
 
-  const toggleMedia = (id: string) => {
+  const toggleMedia = (mediaId: string) => {
     setSelectedMediaIds(prev =>
-      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+      prev.includes(mediaId) ? prev.filter(x => x !== mediaId) : [...prev, mediaId]
     );
   };
 
@@ -57,13 +87,13 @@ export default function NewReportPage() {
     return price.toLocaleString();
   };
 
-  const totalPrice = selectedMediaIds.reduce((sum, id) => {
-    const media = mediaList.find(m => m.id === id);
+  const totalPrice = selectedMediaIds.reduce((sum, mediaId) => {
+    const media = mediaList.find(m => m.id === mediaId);
     return sum + (media?.monthly_price || 0);
   }, 0);
 
-  const totalImpressions = selectedMediaIds.reduce((sum, id) => {
-    const media = mediaList.find(m => m.id === id);
+  const totalImpressions = selectedMediaIds.reduce((sum, mediaId) => {
+    const media = mediaList.find(m => m.id === mediaId);
     return sum + (media?.daily_impressions || 0);
   }, 0);
 
@@ -79,8 +109,8 @@ export default function NewReportPage() {
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/reports', {
-        method: 'POST',
+      const res = await fetch(`/api/reports?id=${id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: title.trim(),
@@ -89,14 +119,15 @@ export default function NewReportPage() {
           campaign_end: campaignEnd || null,
           target_audience: targetAudience || null,
           budget: budget ? parseInt(budget) : null,
+          status: status,
         }),
       });
 
       const json = await res.json();
       if (json.success) {
-        router.push('/dashboard/report');
+        router.push(`/dashboard/report/${id}`);
       } else {
-        alert('리포트 생성 실패: ' + json.error);
+        alert('리포트 수정 실패: ' + json.error);
       }
     } catch (err) {
       alert('오류가 발생했습니다');
@@ -106,7 +137,7 @@ export default function NewReportPage() {
     }
   };
 
-  // 공통 스타일
+  // 공통 입력 스타일
   const inputStyle: React.CSSProperties = {
     width: '100%',
     padding: '12px 16px',
@@ -127,12 +158,22 @@ export default function NewReportPage() {
     marginBottom: 8,
   };
 
+  if (loading) {
+    return (
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
+        <div style={{ textAlign: 'center', padding: '80px 0', color: '#6B7684', fontSize: 15 }}>
+          리포트를 불러오는 중...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px' }}>
       {/* 헤더 */}
       <div style={{ marginBottom: 36 }}>
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push(`/dashboard/report/${id}`)}
           style={{
             background: 'none',
             border: 'none',
@@ -143,13 +184,13 @@ export default function NewReportPage() {
             marginBottom: 12,
           }}
         >
-          ← 돌아가기
+          ← 리포트 상세로
         </button>
         <h1 style={{ fontSize: 28, fontWeight: 700, color: '#191F28', margin: 0 }}>
-          새 리포트 만들기
+          리포트 수정
         </h1>
         <p style={{ fontSize: 15, color: '#6B7684', marginTop: 6 }}>
-          캠페인 정보와 매체를 선택하세요
+          캠페인 정보와 매체를 수정하세요
         </p>
       </div>
 
@@ -211,7 +252,7 @@ export default function NewReportPage() {
               />
             </div>
 
-            <div>
+            <div style={{ marginBottom: 20 }}>
               <label style={labelStyle}>예산 (원)</label>
               <input
                 type="number"
@@ -225,6 +266,22 @@ export default function NewReportPage() {
                   {formatPrice(parseInt(budget))}원
                 </p>
               )}
+            </div>
+
+            <div>
+              <label style={labelStyle}>상태</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                style={{
+                  ...inputStyle,
+                  cursor: 'pointer',
+                }}
+              >
+                <option value="draft">작성중</option>
+                <option value="analyzing">분석중</option>
+                <option value="completed">완료</option>
+              </select>
             </div>
           </div>
 
@@ -249,11 +306,7 @@ export default function NewReportPage() {
               </span>
             </div>
 
-            {loading ? (
-              <div style={{ textAlign: 'center', padding: '40px 0', color: '#6B7684' }}>
-                매체를 불러오는 중...
-              </div>
-            ) : mediaList.length === 0 ? (
+            {mediaList.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '40px 0', color: '#6B7684' }}>
                 등록된 매체가 없습니다
               </div>
@@ -417,7 +470,7 @@ export default function NewReportPage() {
                 transition: 'background-color 0.2s',
               }}
             >
-              {submitting ? '생성 중...' : '리포트 생성'}
+              {submitting ? '수정 중...' : '수정 완료'}
             </button>
           </div>
         </div>
